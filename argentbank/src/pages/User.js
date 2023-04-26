@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { setAuth, setToken } from "../feature/auth.slice";
 import { setUserData } from "../feature/user.slice";
 
 const User = () => {
@@ -15,8 +14,6 @@ const User = () => {
 
   useEffect(() => {
     if (token) {
-      dispatch(setToken(token));
-      dispatch(setAuth(true));
       axios
         .post("http://localhost:3001/api/v1/user/profile", null, {
           headers: {
@@ -30,8 +27,8 @@ const User = () => {
   }, []);
 
   const userLogout = () => {
-    dispatch(setToken(""));
-    dispatch(setAuth(false));
+    localStorage.clear();
+    sessionStorage.clear();
     dispatch(setUserData({}));
   };
 

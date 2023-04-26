@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setAuth, setToken } from "../feature/auth.slice";
 import { fetchLogin } from "../feature/login.slice";
 
 const Login = () => {
@@ -22,13 +20,9 @@ const Login = () => {
     dispatch(fetchLogin({ username, password })).then((action) => {
       if (!error && rememberIsChecked) {
         sessionStorage.setItem("token", action.payload.body.token);
-        dispatch(setToken(action.payload.body.token));
-        dispatch(setAuth(true));
         navigate("/user");
       } else if (!error && !rememberIsChecked) {
         localStorage.setItem("token", action.payload.body.token);
-        dispatch(setToken(action.payload.body.token));
-        dispatch(setAuth(true));
         navigate("/user");
       }
     });
@@ -59,14 +53,7 @@ const Login = () => {
               <input type="checkbox" id="rememberme" />
               <label htmlFor="rememberme">Remember me</label>
             </div>
-            {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
-            {/* <NavLink to="/user" className="sign-in-button">
-                Sign In
-              </NavLink> */}
-            {/* <a href="./user.html" className="sign-in-button">
-                Sign In
-              </a> */}
-            {/* <!-- SHOULD BE THE BUTTON BELOW --> */}
+
             <button className="sign-in-button">Sign In</button>
           </form>
         </section>
